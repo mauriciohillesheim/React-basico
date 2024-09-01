@@ -1,5 +1,3 @@
-/* eslint-disable react/no-unknown-property */
-/* eslint-disable react/prop-types */
 import './styles.css'
 
 export default function List({ titulo = "Sem titulo" }) {
@@ -27,3 +25,5 @@ export default function List({ titulo = "Sem titulo" }) {
         </section>
     )
 }
+/* eslint-disable react/no-unknown-property */
+/* eslint-disable react/prop-types */
