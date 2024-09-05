@@ -1,62 +1,53 @@
-import { useEffect, useState } from 'react'
-import './styles.css'
-import Card from '../../components/Card'
-import Filter from '../../components/Filter'
-import Pagination from '../../components/Pagination'
+import { useEffect, useState } from 'react';
+import './styles.css';
+import Card from '../../components/Card';
 
 export default function RickAndMortyApi() {
-  const [ conteudo, setConteudo ] = useState(<></>)
-  const [ busca, setBusca ] = useState('');
-  const [ page, setPage ] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const [conteudo, setConteudo] = useState(<></>);
 
-  async function carregarTodosPersonagens() {
-    var requestOptions = {
+  // Função para carregar os personagens Rick e Morty
+  async function carregarPersonagens() {
+    const requestOptions = {
       method: 'GET',
-      redirect: 'follow'
+      redirect: 'follow',
     };
-    
+
+    // Fazendo a requisição para buscar Rick Sanchez e Morty Smith
     const response = await fetch(
-      `https://rickandmortyapi.com/api/character?page=${page}${busca}`,
+      `https://rickandmortyapi.com/api/character/`,
       requestOptions
-    )
+    );
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`Erro na requisição HTTP! Status: ${response.status}`);
     }
 
     const data = await response.json();
-
-    return { info: data.info, char: data.results, }
+    return data.results;
   }
 
+  // Função para listar e exibir os personagens Rick e Morty
   async function listaPersonagens() {
-    const { char: todosPersonagens, info } = await carregarTodosPersonagens()
-    setTotalPages(info.pages)
+    const personagens = await carregarPersonagens();
 
-    return todosPersonagens.map(personagem =>
-      <Card data={personagem} />
-    )
+    return personagens.map((personagem) => (
+      <Card key={personagem.id} data={personagem} />
+    ));
   }
 
   useEffect(() => {
     async function getConteudo() {
-      setConteudo(await listaPersonagens())
+      setConteudo(await listaPersonagens());
     }
-    getConteudo()
-  }, [page, busca])
+    getConteudo();
+  }, []);
 
   return (
     <div>
-      <Filter busca={busca} setBusca={setBusca} />
+      <h1>Personagens Principais</h1>
       <div className='lista-principal'>
-          { conteudo }
+        {conteudo}
       </div>
-      <Pagination 
-        page={page}
-        totalPages={totalPages}
-        onPageChange={setPage}
-      />
     </div>
-  )
+  );
 }
