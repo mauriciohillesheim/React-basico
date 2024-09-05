@@ -1,6 +1,6 @@
 import './styles.css'
 
-export default function List({ titulo = "Sem titulo" }) {
+export default function List({ titulo }){
     return (
         <section>
             <h2>{titulo}</h2>
@@ -14,12 +14,12 @@ export default function List({ titulo = "Sem titulo" }) {
                     </ul>
                 </div>
                 <div>
-                    <h3>Lista ordenada</h3>
-                        <ol>
-                            <li>Primeiro Item</li>
-                            <li>Segundo Item</li>
-                            <li>Terceiro Item</li>
-                        </ol>
+                    <h3>Lista ordenada:</h3>
+                    <ol>
+                        <li>Primeiro item</li>
+                        <li>Segundo item</li>
+                        <li>Terceiro item</li>
+                    </ol>
                 </div>
             </div>
         </section>
